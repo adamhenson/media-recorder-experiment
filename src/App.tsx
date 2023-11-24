@@ -21,9 +21,34 @@ const images = [
 ];
 
 function App() {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isActive, setIsActive] = useState(false);
-  let intervalRef = useRef<NodeJS.Timer | undefined>();
+  const [recordedBlobSize, setRecordedBlobSize] = useState<
+    number | undefined
+  >();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasStreamRef = useRef<MediaStream | null>(null);
+  const intervalRef = useRef<NodeJS.Timer | undefined>();
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[] | null>([]);
+
+  const onMediaRecorderError = (event: Event) => {
+    console.error((event as any)?.error);
+  };
+
+  const onVideoDataAvailable = (event: BlobEvent) => {
+    if (event.data.size <= 0 || !recordedChunksRef.current) {
+      return;
+    }
+    recordedChunksRef.current.push(event.data);
+  };
+
+  const onMediaRecorderStop = () => {
+    if (!recordedChunksRef.current) {
+      return;
+    }
+    const recordedBlob = new Blob(recordedChunksRef.current);
+    setRecordedBlobSize(recordedBlob.size);
+  };
 
   useEffect(() => {
     if (!canvasRef.current) {
@@ -35,7 +60,26 @@ function App() {
       return;
     }
 
+    if (!mediaRecorderRef.current) {
+      canvasStreamRef.current = canvasRef.current.captureStream(60);
+      mediaRecorderRef.current = new MediaRecorder(canvasStreamRef.current);
+      mediaRecorderRef.current.addEventListener(
+        'dataavailable',
+        onVideoDataAvailable
+      );
+      mediaRecorderRef.current.addEventListener('error', onMediaRecorderError);
+      mediaRecorderRef.current.addEventListener('stop', onMediaRecorderStop);
+    }
+
     if (isActive) {
+      recordedChunksRef.current = [];
+
+      /**
+       * utilizes `timeslice` argument to ensure video chunks are recorded granularly
+       * {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#timeslice | MediaRecorder: start() method `timeslice` property}
+       */
+      mediaRecorderRef.current.start(1000);
+
       intervalRef.current = setInterval(() => {
         const image = images[getRandomNumber(1, 6)];
         const onLoad = () =>
@@ -48,6 +92,9 @@ function App() {
       }, 100);
     } else {
       clearInterval(intervalRef.current);
+      if (mediaRecorderRef.current.state === 'recording') {
+        mediaRecorderRef.current.stop();
+      }
     }
   }, [isActive]);
 
@@ -81,6 +128,11 @@ function App() {
         >
           {!isActive ? 'Start' : 'Stop'}
         </button>
+        {recordedBlobSize && (
+          <div className="bg-slate-600 rounded-sm px-3 py-1 text-white">
+            Recorded Video Size in Bytes: <strong>{recordedBlobSize}</strong>
+          </div>
+        )}
       </div>
     </div>
   );
