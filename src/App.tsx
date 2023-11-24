@@ -119,7 +119,7 @@ function App() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center h-screen w-screen bg-slate-800">
       <div className="flex flex-col items-center gap-6">
         <canvas ref={canvasRef} width="131.5" height="134.75" />
         <button
