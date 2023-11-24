@@ -62,6 +62,14 @@ function App() {
 
     if (!mediaRecorderRef.current) {
       canvasStreamRef.current = canvasRef.current.captureStream(60);
+
+      const ac = new AudioContext();
+      const osc = ac.createOscillator();
+      const dest = ac.createMediaStreamDestination();
+      osc.connect(dest);
+      const audioTrack = dest.stream.getAudioTracks()[0];
+      canvasStreamRef.current.addTrack(audioTrack);
+
       mediaRecorderRef.current = new MediaRecorder(canvasStreamRef.current);
       mediaRecorderRef.current.addEventListener(
         'dataavailable',
