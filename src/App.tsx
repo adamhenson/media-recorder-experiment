@@ -129,7 +129,7 @@ function App() {
           {!isActive ? 'Start' : 'Stop'}
         </button>
         {recordedBlobSize && (
-          <div className="bg-slate-600 rounded-sm px-3 py-1 text-white">
+          <div className="bg-slate-300 rounded-full px-3 py-1 fixed right-4 bottom-4">
             Recorded Video Size in Bytes: <strong>{recordedBlobSize}</strong>
           </div>
         )}
