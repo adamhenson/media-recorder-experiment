@@ -19,7 +19,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "npx playwright test",
+    "test:ui": "npx playwright test --ui",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

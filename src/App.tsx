@@ -89,7 +89,7 @@ function App() {
         } else {
           image.onload = onLoad;
         }
-      }, 100);
+      }, 0);
     } else {
       clearInterval(intervalRef.current);
       if (mediaRecorderRef.current.state === 'recording') {
@@ -125,12 +125,14 @@ function App() {
         <button
           className="bg-[#eb5934] text-white cursor-pointer p-1.5 rounded-full border-0 w-[120px] uppercase hover:bg-[#eb4034]"
           onClick={() => setIsActive((previous) => !previous)}
+          data-testid="button-start-stop"
         >
           {!isActive ? 'Start' : 'Stop'}
         </button>
-        {recordedBlobSize && (
+        {typeof recordedBlobSize === 'number' && (
           <div className="bg-slate-300 rounded-full px-3 py-1 fixed right-4 bottom-4">
-            Recorded Video Size in Bytes: <strong>{recordedBlobSize}</strong>
+            Recorded Video Size in Bytes:{' '}
+            <strong data-testid="blob-size">{recordedBlobSize}</strong>
           </div>
         )}
       </div>
