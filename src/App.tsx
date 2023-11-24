@@ -51,6 +51,26 @@ function App() {
     }
   }, [isActive]);
 
+  useEffect(() => {
+    if (!canvasRef.current) {
+      return;
+    }
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
+
+    const image = images[6];
+    const onLoad = () =>
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+    if (image.complete) {
+      onLoad();
+    } else {
+      image.onload = onLoad;
+    }
+  }, []);
+
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col items-center gap-6">
