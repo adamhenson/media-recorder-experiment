@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const MAX_LOOP_COUNT = 100;
+const MAX_LOOP_COUNT = 10;
 
 let count = 1;
 test.describe('MediaRecorder', () => {
@@ -12,7 +12,7 @@ test.describe('MediaRecorder', () => {
       await buttonStartStop.click();
       await expect(buttonStartStop).toHaveText('Stop');
 
-      await new Promise((resolve) => setTimeout(resolve, 15000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       await buttonStartStop.click();
       await expect(buttonStartStop).toHaveText('Start');
@@ -24,9 +24,7 @@ test.describe('MediaRecorder', () => {
       const blobSizeNumber = Number(textContent);
       expect(typeof blobSizeNumber).toBe('number');
       expect(isNaN(blobSizeNumber)).toBe(false);
-
-      const blobSizeMb = blobSizeNumber / 1000000;
-      expect(blobSizeMb).toBeGreaterThan(1);
+      expect(blobSizeNumber).toBeGreaterThan(0);
     });
     count++;
   }

@@ -67,7 +67,7 @@ function App() {
       const osc = ac.createOscillator();
       const dest = ac.createMediaStreamDestination();
       osc.connect(dest);
-      const audioTrack = dest.stream.getAudioTracks()[0];
+      const [audioTrack] = dest.stream.getAudioTracks();
       canvasStreamRef.current.addTrack(audioTrack);
 
       mediaRecorderRef.current = new MediaRecorder(canvasStreamRef.current);
@@ -86,7 +86,7 @@ function App() {
        * utilizes `timeslice` argument to ensure video chunks are recorded granularly
        * {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#timeslice | MediaRecorder: start() method `timeslice` property}
        */
-      mediaRecorderRef.current.start(1000);
+      mediaRecorderRef.current.start();
 
       intervalRef.current = setInterval(() => {
         const image = images[getRandomNumber(1, 6)];
