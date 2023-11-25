@@ -19,7 +19,7 @@ export default defineConfig({
   reporter: process.env.CI ? 'github' : 'list',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: 'http://10.1.0.35:3000',
     trace: 'on-first-retry',
   },
   projects: [
