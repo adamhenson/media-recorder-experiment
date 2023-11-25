@@ -30,6 +30,7 @@ jobs:
         run: npx playwright test
         env:
           BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
+          HOME: /root
       - uses: actions/upload-artifact@v3
         if: always()
         with:
