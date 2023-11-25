@@ -8,8 +8,6 @@ jobs:
   playwright:
     timeout-minutes: 5
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:next
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
