@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: amondnet/vercel-action@master
+        id: vercelAction
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -18,8 +25,8 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Server and Playwright tests
-        run: npm run start:test
+      - name: Run Playwright tests
+        run: BASE_URL=${{ steps.vercelAction.outputs.preview-url }} npm run test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
