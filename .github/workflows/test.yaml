@@ -5,28 +5,23 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  build:
+  playwright:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # https://github.com/actions/checkout/issues/1169
-      # - run: git config --system --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
-      # - uses: amondnet/vercel-action@v20
-      #   id: vercelAction
-      #   with:
-      #     github-comment: false
-      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
-      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install -g serve
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Build app
+        run: npm run build
       - name: Run Server and Playwright tests
         run: npm run start:test
         env:
