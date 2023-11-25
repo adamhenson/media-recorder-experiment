@@ -10,8 +10,6 @@ test.describe('MediaRecorder', async () => {
   while (count <= MAX_LOOP_COUNT) {
     test(`recorded blob has a valid size (${count})`, async ({ page }) => {
       await page.goto('/');
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      await page.screenshot({ path: 'playwright-report/screenshot.png' });
       const buttonStartStop = page.getByTestId('button-start-stop');
       await buttonStartStop.click();
       await expect(buttonStartStop).toHaveText('Stop');
