@@ -10,6 +10,15 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
+      # https://github.com/actions/checkout/issues/1169
+      - run: git config --system --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
+      - uses: amondnet/vercel-action@v20
+        id: vercelAction
+        with:
+          github-comment: false
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
@@ -17,15 +26,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
-        run: |
-          npx playwright install --with-deps
+        run: npx playwright install --with-deps
       - name: Run Server and Playwright tests
-        run: |
-          npm run build
-          npm run start:test
+        run: npm run test
         env:
-          # DEBUG: pw:api
-          BASE_URL: 'http://localhost:3000'
+          BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
+          DEBUG: pw:api
       - uses: actions/upload-artifact@v3
         if: always()
         with:
