@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "start:production": "serve -s build",
-    "start:test": "concurrently -n cra,test \"npm run start\" \"npm run test\" --success last --kill-others",
+    "start:test": "concurrently -n cra,test \"npm run start\" \"npm run test -- --project=\"Mobile Safari\"\" --success last --kill-others",
     "build": "react-scripts build",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
