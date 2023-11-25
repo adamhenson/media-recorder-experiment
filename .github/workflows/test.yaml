@@ -20,7 +20,9 @@ jobs:
         run: |
           npx playwright install --with-deps
       - name: Run Server and Playwright tests
-        run: npm run start:test
+        run: |
+          npm run build
+          npm run start:test
         env:
           DEBUG: pw:api
           BASE_URL: 'http://localhost:3000'
