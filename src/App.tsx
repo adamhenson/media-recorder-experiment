@@ -83,11 +83,6 @@ function App() {
 
     if (isActive) {
       recordedChunksRef.current = [];
-
-      /**
-       * utilizes `timeslice` argument to ensure video chunks are recorded granularly
-       * {@link https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#timeslice | MediaRecorder: start() method `timeslice` property}
-       */
       mediaRecorderRef.current.start();
 
       intervalRef.current = setInterval(() => {
