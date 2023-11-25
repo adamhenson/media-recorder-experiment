@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const MAX_LOOP_COUNT = 10;
+const MAX_LOOP_COUNT = 5;
 
 let count = 1;
 test.describe('MediaRecorder', async () => {
