@@ -30,7 +30,6 @@ jobs:
         run: npx playwright test
         env:
           BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
-          HOME: /root
       - run: mdir playwright-report
       - uses: actions/upload-artifact@v3
         if: always()
