@@ -1,13 +1,10 @@
 import { test, expect } from '@playwright/test';
 
-const MAX_LOOP_COUNT = 5;
-
-let count = 1;
 test.describe('MediaRecorder', async () => {
   test.beforeAll(async () => {
     await new Promise((resolve) => setTimeout(resolve, 5000));
   });
-  test(`recorded blob has a valid size (${count})`, async ({ page }) => {
+  test(`recorded blob has a valid size`, async ({ page }) => {
     await page.goto('/');
     const buttonStartStop = page.getByTestId('button-start-stop');
     await buttonStartStop.click();

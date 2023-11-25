@@ -27,7 +27,7 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Server and Playwright tests
+      - name: Run Playwright tests
         run: npm run test
         env:
           BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
