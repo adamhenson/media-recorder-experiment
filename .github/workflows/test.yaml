@@ -26,7 +26,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run: BASE_URL=${{ steps.vercelAction.outputs.preview-url }} npm run test
+        run: npm run test
+        env:
+          BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
