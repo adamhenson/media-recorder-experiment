@@ -11,8 +11,8 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.40.0-jammy
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Vercel
-        run: git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
+      # - name: Setup Vercel
+      #   run: git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
       - uses: amondnet/vercel-action@master
         id: vercelAction
         with:
@@ -20,6 +20,8 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        env:
+          HOME: /root
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
