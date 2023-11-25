@@ -23,9 +23,11 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
       - name: Run Playwright tests
-        run: git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment && npx playwright test
+        run: npx playwright test
         env:
           BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
       - uses: actions/upload-artifact@v3
