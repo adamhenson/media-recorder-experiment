@@ -17,8 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start:test": "concurrently -n cra,test \"npm run start\" \"npm run test\" --success last",
+    "start": "BROWSER=none react-scripts start",
+    "start:test": "concurrently -n cra,test \"npm run start\" \"npm run test\" --success last --kill-others",
     "build": "react-scripts build",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
