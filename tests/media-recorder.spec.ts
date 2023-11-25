@@ -26,5 +26,8 @@ test.describe('MediaRecorder', async () => {
     expect(typeof blobSizeNumber).toBe('number');
     expect(isNaN(blobSizeNumber)).toBe(false);
     expect(blobSizeNumber).toBeGreaterThan(0);
+    await page.screenshot({
+      path: 'playwright-report/media-recorder-complete.png',
+    });
   });
 });
