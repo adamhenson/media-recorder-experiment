@@ -10,10 +10,10 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.40.0-jammy
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v3
       - name: Setup for Vercel Action
         run: git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
-      - uses: amondnet/vercel-action@master
+      - uses: amondnet/vercel-action@v20
         id: vercelAction
         with:
           github-comment: false
