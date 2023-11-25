@@ -11,6 +11,7 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.40.0-jammy
     steps:
       - uses: actions/checkout@v3
+      # https://github.com/actions/checkout/issues/1169
       - run: git config --system --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
       - uses: amondnet/vercel-action@v20
         id: vercelAction
@@ -30,6 +31,7 @@ jobs:
         env:
           BASE_URL: ${{ steps.vercelAction.outputs.preview-url }}
           HOME: /root
+      - run: mdir playwright-report
       - uses: actions/upload-artifact@v3
         if: always()
         with:
