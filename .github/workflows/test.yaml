@@ -8,6 +8,8 @@ jobs:
   playwright:
     timeout-minutes: 5
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.40.0-jammy
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -15,13 +17,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install dependencies
-        run: |
-          npm ci
-          npm install -g serve
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-      - name: Build app
-        run: npm run build
+        run: npm ci
       - name: Run Server and Playwright tests
         run: npm run start:test
         env:
