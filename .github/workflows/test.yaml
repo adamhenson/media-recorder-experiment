@@ -18,6 +18,7 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: git config --global --add safe.directory /__w/media-recorder-experiment/media-recorder-experiment
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
