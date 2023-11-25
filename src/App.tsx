@@ -70,7 +70,9 @@ function App() {
       const [audioTrack] = dest.stream.getAudioTracks();
       canvasStreamRef.current.addTrack(audioTrack);
 
-      mediaRecorderRef.current = new MediaRecorder(canvasStreamRef.current);
+      mediaRecorderRef.current = new window.MediaRecorder(
+        canvasStreamRef.current
+      );
       mediaRecorderRef.current.addEventListener(
         'dataavailable',
         onVideoDataAvailable
