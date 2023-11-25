@@ -18,7 +18,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start:test": "concurrently -n cra,test \"serve -s build\" \"npm run test\" --success last --kill-others",
+    "start:production": "serve -s build",
+    "start:test": "concurrently -n cra,test \"start:production\" \"npm run test\" --success last --kill-others",
     "build": "react-scripts build",
     "test": "npx playwright test",
     "test:ui": "npx playwright test --ui",
