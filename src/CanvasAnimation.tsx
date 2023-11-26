@@ -81,10 +81,12 @@ export const CanvasAnimation = () => {
       const ac = new AudioContext();
       const dest = ac.createMediaStreamDestination();
       const [audioTrack] = dest.stream.getAudioTracks();
-      canvasStreamRef.current.addTrack(audioTrack);
+      const [videoTrack] = canvasStreamRef.current.getVideoTracks();
 
       // setup `MediaRecorder`
-      mediaRecorderRef.current = new MediaRecorder(canvasStreamRef.current);
+      mediaRecorderRef.current = new MediaRecorder(
+        new MediaStream([videoTrack, audioTrack])
+      );
       mediaRecorderRef.current.addEventListener(
         'dataavailable',
         onVideoDataAvailable
